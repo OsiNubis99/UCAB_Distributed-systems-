@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package src.BibliotecaA;
 
 import src.BibliotecaB.MiddlewareServidorB;
@@ -19,10 +14,6 @@ import java.text.SimpleDateFormat;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author Raikjars
- */
 public class MiddlewareClienteA {
 
     public MiddlewareClienteA() {
@@ -58,9 +49,11 @@ public class MiddlewareClienteA {
     
     public static void generateLogMCA(FileWriter logs, String letter, String data) throws MalformedURLException, RemoteException, NotBoundException , ParserConfigurationException, SAXException, IOException{
         String actualDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
-        logs.write("[" + actualDate + "]" + " Middleware Cliente A traduciendo peticion a Z39"+ " | ");
-        System.out.println("[" + actualDate + "]" + " Middleware Cliente A traduciendo peticion a Z39");
-        logs.write("[" + actualDate + "]" + " Peticion traducida. LLamando a Middleware de Servidor " + letter + data + " | ");
-        System.out.println("[" + actualDate + "]" + " Peticion traducida. LLamando a Middleware de Servidor" + letter  + data );
+        logs.write("\n[" + actualDate + "] Middleware Cliente A traduciendo peticion a Z39 | ");
+					logs.flush();
+        System.out.println("[" + actualDate + "] Middleware Cliente A traduciendo peticion a Z39");
+        logs.write("\n[" + actualDate + "] Peticion traducida. LLamando a Middleware de Servidor " + letter + data + " | ");
+					logs.flush();
+        System.out.println("[" + actualDate + "] Peticion traducida. LLamando a Middleware de Servidor" + letter  + data );
     }
 }

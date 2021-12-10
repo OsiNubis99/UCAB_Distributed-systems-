@@ -52,13 +52,12 @@ public class MiddlewareServidorC {
     }
     
     public static void generateLogMSA(FileWriter logs, String type ,String letter, String data) throws MalformedURLException, RemoteException, NotBoundException , ParserConfigurationException, SAXException, IOException{
-        
         String actualDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
-        logs.write(actualDate + " Peticion de Biblioteca " + letter + " | Middleware Servidor B traduciendo peticion de Z39 a lenguaje de Biblioteca B"+ " | ");
+        logs.write("\n[" + actualDate + "] Peticion de Biblioteca " + letter + " | Middleware Servidor B traduciendo peticion de Z39 a lenguaje de Biblioteca B | ");
+					logs.flush();
         System.out.println(actualDate + " Peticion de Biblioteca " + letter + " | Middleware Servidor B traduciendo peticion de Z39 a lenguaje de Biblioteca B");
-        
-        logs.write(actualDate + " Peticion de Biblioteca " + letter + " | Peticion traducida. Ejecutando metodo de Servidor "  + type + data + " | ");
+        logs.write("\n[" + actualDate + "] Peticion de Biblioteca " + letter + " | Peticion traducida. Ejecutando metodo de Servidor "  + type + data + " | ");
+					logs.flush();
         System.out.println(actualDate + " Peticion de Biblioteca " + letter + " | Peticion traducida. Ejecutando metodo de Servidor " + type + data);
-        
     }
 }

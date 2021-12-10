@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package src.BibliotecaC;
 
 import src.BibliotecaA.MiddlewareClienteA;
@@ -19,23 +14,13 @@ import static javafx.application.Platform.exit;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author Raikjars
- */
 public class Cliente {
     private static RMIInterfaceC interfaceC;
-    
+
     public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException, ParserConfigurationException, SAXException, IOException {
-        
-        MiddlewareClienteC mC = new MiddlewareClienteC(); //Se instacia objeto de clase Middleware para traducir peticiones
-        //CREACION DEL ARCHIVO DE LOGS
-        FileWriter logs = new FileWriter("C:\\Users\\Public\\Logs\\logsC.txt");
-        
-        
+        MiddlewareClienteC mC = new MiddlewareClienteC();
+        FileWriter logs = new FileWriter("logsC.txt");
         while(true) {
-            
-            //SELECCION DE BIBLIOTECA
             System.out.println("\nMENU DE BIBLIOTECA C\n\n");
             System.out.println("Seleccione la biblioteca en la que desea buscar:\n");
             System.out.println("[1] Biblioteca C\n");
@@ -45,7 +30,6 @@ public class Cliente {
             System.out.print("Selecciona tu opción: ");
             Scanner myObj = new Scanner(System.in);
             int option = myObj.nextInt();
-            //SELECCION DEL TIPO DE BUSQUEDA
             System.out.println("\n\nMENU DE BIBLIOTECA C\n\n");
             System.out.println("Seleccione el tipo de busqueda que desea hacer:\n");
             System.out.println("[1] Encontrar Volumen\n");
@@ -53,7 +37,6 @@ public class Cliente {
             System.out.print("Selecciona tu opción: ");
             Scanner myObj1 = new Scanner(System.in);
             int search = myObj1.nextInt();
-            //SELECCION DEL TEXTO A BUSCAR
             System.out.print("\n\nEscribe tu busqueda: ");
             Scanner myObj2 = new Scanner(System.in);
             String data = myObj2.nextLine();
@@ -67,7 +50,6 @@ public class Cliente {
                             String libro = interfaceC.EncontrarVol(data ); 
                             System.out.println(libro);
                             generateLog(logs, " Peticion recibida correctamente | Respuesta:  " , data );
-
                             break;
                         case 2:
                             generateLog(logs, " Peticion del Cliente C hacia su Servido | Encontrar Autor " , data );
@@ -81,73 +63,45 @@ public class Cliente {
                         switch(search) {
                             case 1:
                                 generateLog(logs, " Peticion de Cliente C hacia Servidor B | Encontrar Volumen " , data );
-
-                                //Cliente A llama a medoto PedirLibro de su Middleware para que este lo traduzca a Z39
                                 String libro = mC.EncontrarVol(data, "B", logs);
                                 System.out.println(libro);
-                                
-                                 //Imprimiendo traza y escribiendo logs en txt
                                 generateLog(logs, " Peticion recibida correctamente | Respuesta: " , data );
                                 break;
                             case 2:
-                                
-                                //Imprimiendo traza y escribiendo logs en txt
                                 generateLog(logs, " Peticion de Cliente C hacia Servidor B | Encontrar Autor " , data );
-
-                                //Cliente A llama a medoto PedirAutor de su Middleware para que este lo traduzca a Z39
                                 String author = mC.EncontrarAutor(data, "B", logs);
                                 System.out.println(author);
-
-                                //Imprimiendo traza y escribiendo logs en txt
                                 generateLog(logs, " Peticion recibida correctamente | Respuesta:  " , data );
                                 break;
                         }
                         break;
                 case 3:
-
-                    //SI CLIENTE PIDE POR TITULO A BIBLIOTECA C
                     switch(search) {
                             case 1:
-                                //Imprimiendo traza y escribiendo logs en txt
                                 generateLog(logs, " Peticion de Cliente C hacia Servidor A | Encontrar Volumen " , data );
-
                                 String libro = mC.EncontrarVol(data, "A", logs);
                                 System.out.println(libro);
-
-                                //Imprimiendo traza y escribiendo logs en txt
                                 generateLog(logs, " Peticion recibida correctamente | Respuesta:  " , data );
-                                
                                 break;
-                                
-                            case 2: //SI CLIENTE PIDE POR AUTOR A BIBLIOTECA C
-                                
-                                //Imprimiendo traza y escribiendo logs en txt
+                            case 2:
                                 generateLog(logs, " Peticion de Cliente C hacia Servidor A | Encontrar Autor " , data );
-
-                                //Cliente A llama a medoto PedirAutor de su Middleware para que este lo traduzca a Z39
                                 String author = mC.EncontrarAutor(data, "A", logs);
-                                System.out.println(author); 
-
-                                //Imprimiendo traza y escribiendo logs en txt
+                                System.out.println(author);
                                 generateLog(logs, " Peticion recibida correctamente | Respuesta:  " , data );
-                                
                                 break;
                     }
                     break;
                 case 4:
-                    //CIERRA LA ESCRITURA DEL ARCHIVO DE LOGS
                     logs.close();
                     exit();
-            } //FIN DEL SWITCH
-        
-        }//FIN DE WHILE 
-        
- 
-    }//FIN DEL MAIN
+            }
+        }
+    }
     
     public static void generateLog(FileWriter logs, String text, String data) throws MalformedURLException, RemoteException, NotBoundException , ParserConfigurationException, SAXException, IOException{
         String actualDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
         System.out.println("[" + actualDate + "]" + text + data);
-        logs.write("[" + actualDate + "]" + text + data);
+        logs.write("\n[" + actualDate + "]" + text + data);
+					logs.flush();
     }
 }
