@@ -30,7 +30,7 @@ public class Servidor extends UnicastRemoteObject implements RMIInterfaceC {
     public static void main(String[] args){
         try {
 					LocateRegistry.createRegistry(5093);
-					Naming.rebind("rmi://"+src.Ips.C+"/BibliotecaC", new Servidor());      //ruta donde sube objeto remoto e instancia del mismo      
+					Naming.rebind("rmi://localhost:5093/BibliotecaC", new Servidor());      //ruta donde sube objeto remoto e instancia del mismo      
           System.err.println("Server BibliotecaC running");   
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
