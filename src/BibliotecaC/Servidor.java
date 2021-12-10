@@ -10,7 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class Servidor extends UnicastRemoteObject implements RMIInterfaceB {    
+public class Servidor extends UnicastRemoteObject implements RMIInterfaceC {    
     public Servidor() throws RemoteException {
         super(); 
     }
@@ -30,7 +30,7 @@ public class Servidor extends UnicastRemoteObject implements RMIInterfaceB {
     public static void main(String[] args){
         try {
 					LocateRegistry.createRegistry(5093);
-					Naming.rebind("//localhost:5093/BibliotecaC", new Servidor());      //ruta donde sube objeto remoto e instancia del mismo      
+					Naming.rebind("rmi://"+src.Ips.C+"/BibliotecaC", new Servidor());      //ruta donde sube objeto remoto e instancia del mismo      
           System.err.println("Server BibliotecaC running");   
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());

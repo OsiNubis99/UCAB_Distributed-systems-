@@ -8,7 +8,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import static javafx.application.Platform.exit;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -91,7 +90,7 @@ public class Cliente {
                     break;
                 case 4:
                     logs.close();
-                    exit();
+                    break;
             }
         }
     }
