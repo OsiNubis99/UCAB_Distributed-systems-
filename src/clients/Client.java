@@ -2,6 +2,8 @@ package src.clients;
 
 import java.io.*;
 import java.net.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import src.Products;
 import src.Sockets;
 
@@ -24,17 +26,23 @@ public class Client {
     try {
       Boolean resp;
       Integer x = 0;
+      DateTimeFormatter dtf =
+          DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+      LocalDateTime now = LocalDateTime.now();
       while (true) {
         if (this.productsCont[x] == false) {
-          System.out.println("I will search " + this.products[x]);
+          System.out.println(dtf.format(now) + ": I will search " +
+                             this.products[x]);
           if (this.Search(this.products[x])) {
-            System.out.println("I found " + this.products[x]);
+            System.out.println(dtf.format(now) + ": I found " +
+                               this.products[x]);
             this.productsCont[x] = true;
           } else {
-            System.out.println("I dont' found " + this.products[x]);
+            System.out.println(dtf.format(now) + ": I dont' found " +
+                               this.products[x]);
             if (this.requests[x]) {
               this.requests[x] = false;
-              System.out.println("I'm calling seller ");
+              System.out.println(dtf.format(now) + ": I'm calling seller ");
               this.CallSeller();
             } else {
               this.requests[x] = true;
@@ -42,7 +50,7 @@ public class Client {
           }
         }
         if (this.productsCont[0] == true && this.productsCont[1] == true) {
-          System.out.println("I'm smoking!");
+          System.out.println(dtf.format(now) + ": I'm smoking!");
           this.productsCont[0] = false;
           this.productsCont[1] = false;
           this.pause(smokeTime);

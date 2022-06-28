@@ -2,6 +2,8 @@ package src.servers;
 
 import java.io.*;
 import java.net.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import src.Sockets;
 
 public class Server {
@@ -19,6 +21,9 @@ public class Server {
       String res = "";
       ServerSocket server = new ServerSocket(this.port);
       System.out.println("Listening in " + Integer.toString(this.port));
+      DateTimeFormatter dtf =
+          DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+      LocalDateTime now = LocalDateTime.now();
       while (true) {
         req = "";
         Socket socket = server.accept();
@@ -27,11 +32,11 @@ public class Server {
         switch (req) {
         case "I need!":
           if (this.product > 0) {
-            System.out.println("Good!");
+            System.out.println(dtf.format(now) + ": Good!");
             res = "Take one!";
             this.product -= 1;
           } else {
-            System.out.println("Bad");
+            System.out.println(dtf.format(now) + ": Bad");
             res = "I don't have bro :(";
           }
           DataOutputStream dataOut =
@@ -41,7 +46,7 @@ public class Server {
           dataOut.close();
           break;
         case "Take one!":
-          System.out.println("More!");
+          System.out.println(dtf.format(now) + ": More!");
           this.product += 1;
           break;
         }

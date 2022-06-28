@@ -2,6 +2,8 @@ package src;
 
 import java.io.*;
 import java.net.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class Seller {
@@ -11,22 +13,26 @@ public class Seller {
       ServerSocket server = new ServerSocket(Sockets.sellerPort);
       System.out.println("Listening in " +
                          Integer.toString(Sockets.sellerPort));
+      DateTimeFormatter dtf =
+          DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+      LocalDateTime now = LocalDateTime.now();
       while (true) {
         Socket socket = server.accept();
         if (random.nextBoolean()) {
           CallServer(Sockets.server1ip, Sockets.server1port);
-          System.out.println("1");
+          System.out.println(dtf.format(now) + ": 1");
           if (random.nextBoolean()) {
             CallServer(Sockets.server2ip, Sockets.server2port);
-            System.out.println("2");
+            System.out.println(dtf.format(now) + ": 2");
           } else {
             CallServer(Sockets.server3ip, Sockets.server3port);
-            System.out.println("3");
+            System.out.println(dtf.format(now) + ": 3");
           }
         } else {
           CallServer(Sockets.server2ip, Sockets.server2port);
+          System.out.println(dtf.format(now) + ": 2");
           CallServer(Sockets.server3ip, Sockets.server3port);
-          System.out.println("2 y 3");
+          System.out.println(dtf.format(now) + ": 3");
         }
         socket.close();
         pause(5000);
