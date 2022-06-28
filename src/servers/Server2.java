@@ -6,7 +6,7 @@ import src.Sockets;
 
 public class Server2 {
   public static void main(String[] args) {
-    Server server = new Server(Sockets.server2);
+    Server server = new Server(Sockets.server2port);
     server.Run(5000);
   }
 }

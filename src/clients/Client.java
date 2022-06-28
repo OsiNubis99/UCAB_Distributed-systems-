@@ -59,27 +59,28 @@ public class Client {
   public Boolean Search(String item) {
     switch (item) {
     case Products.product1:
-      return CallServer(Sockets.server1);
+      return CallServer(Sockets.server1ip, Sockets.server1port);
     case Products.product2:
-      return CallServer(Sockets.server2);
+      return CallServer(Sockets.server2ip, Sockets.server2port);
     case Products.product3:
-      return CallServer(Sockets.server3);
+      return CallServer(Sockets.server3ip, Sockets.server3port);
     }
     return false;
   }
 
   private void CallSeller() {
     try {
-      Socket socket = new Socket("localhost", Sockets.seller);
+      Socket socket = new Socket(Sockets.sellerIp, Sockets.sellerPort);
       socket.close();
     } catch (Exception e) {
       System.out.println(e);
     }
   }
-  private Boolean CallServer(Integer server) {
+
+  private Boolean CallServer(String serverIp, Integer serverPort) {
     String resp = "";
     try {
-      Socket socket = new Socket("localhost", server);
+      Socket socket = new Socket(serverIp, serverPort);
       DataInputStream dataIn = new DataInputStream(socket.getInputStream());
       DataOutputStream dataOut = new DataOutputStream(socket.getOutputStream());
       dataOut.writeUTF("I need!");
