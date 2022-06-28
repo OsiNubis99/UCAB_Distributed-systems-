@@ -37,15 +37,16 @@ public class Seller {
   }
 
   private static void CallServer(String serverIp, Integer serverPort) {
-    try {
-      Socket socket = new Socket(serverIp, serverPort);
+    try (Socket socket = new Socket(serverIp, serverPort)) {
       DataOutputStream dataOut = new DataOutputStream(socket.getOutputStream());
       dataOut.writeUTF("Take one!");
       dataOut.flush();
       dataOut.close();
       socket.close();
-    } catch (Exception e) {
-      System.out.println(e);
+    } catch (UnknownHostException ex) {
+      System.out.println("Server not found: " + ex.getMessage());
+    } catch (IOException ex) {
+      System.out.println("I/O error: " + ex.getMessage());
     }
   }
 

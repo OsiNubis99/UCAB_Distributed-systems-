@@ -69,18 +69,18 @@ public class Client {
   }
 
   private void CallSeller() {
-    try {
-      Socket socket = new Socket(Sockets.sellerIp, Sockets.sellerPort);
+    try (Socket socket = new Socket(Sockets.sellerIp, Sockets.sellerPort)) {
       socket.close();
-    } catch (Exception e) {
-      System.out.println(e);
+    } catch (UnknownHostException ex) {
+      System.out.println("Server not found: " + ex.getMessage());
+    } catch (IOException ex) {
+      System.out.println("I/O error: " + ex.getMessage());
     }
   }
 
   private Boolean CallServer(String serverIp, Integer serverPort) {
     String resp = "";
-    try {
-      Socket socket = new Socket(serverIp, serverPort);
+    try (Socket socket = new Socket(serverIp, serverPort)) {
       DataInputStream dataIn = new DataInputStream(socket.getInputStream());
       DataOutputStream dataOut = new DataOutputStream(socket.getOutputStream());
       dataOut.writeUTF("I need!");
@@ -88,8 +88,10 @@ public class Client {
       resp = dataIn.readUTF();
       dataOut.close();
       socket.close();
-    } catch (Exception e) {
-      System.out.println(e);
+    } catch (UnknownHostException ex) {
+      System.out.println("Server not found: " + ex.getMessage());
+    } catch (IOException ex) {
+      System.out.println("I/O error: " + ex.getMessage());
     }
     return resp.equals("Take one!");
   }
